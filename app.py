@@ -161,8 +161,7 @@ def check_card_logic(card_data, session, creds):
             return f"❌ Server Error: {res.text[:50]}"
             
         if res_json.get("success") and res_json.get("data", {}).get("status") == "succeeded":
-            si_id = res_json["data"].get("id", "N/A")
-            return f"✅ SUCCESS (SI: {si_id})"
+            return "✅ CARD_ADDED"
         else:
             msg = res_json.get("data", {}).get("error", {}).get("message")
             if not msg: msg = res_json.get("data", {}).get("message", "Declined")
