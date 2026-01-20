@@ -215,7 +215,7 @@ def home():
     return f"""
     <html>
     <head>
-        <title>Stripe Auth Gateway - Epical Arc</title>
+        <title>Stripe Auth Gateway 2 - Epical Arc</title>
         <style>
             body {{ font-family: Arial; background: #0a0b10; color: white; padding: 40px; }}
             .container {{ max-width: 800px; margin: 0 auto; }}
@@ -227,7 +227,7 @@ def home():
     </head>
     <body>
         <div class="container">
-            <h1>🔐 Stripe Auth Gateway</h1>
+            <h1>🔐 Stripe Auth Gateway 2</h1>
             <div class="status">
                 <h2>✅ Gateway Online</h2>
                 <p class="info">Site: epicalarc.com</p>
