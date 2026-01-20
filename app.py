@@ -194,7 +194,17 @@ def api_check():
     result = check_card_logic(cc_full, session, creds)
     log(f"📋 Result: {result}", "info")
     session.close()
-    return jsonify({"status": result})
+    
+    # Process result for better bot compatibility
+    is_success = "SUCCESS" in result or "✅" in result
+    status_code = "success" if is_success else "declined"
+    clean_msg = result.replace("✅", "").replace("❌", "").strip()
+    
+    return jsonify({
+        "status": status_code,
+        "message": clean_msg,
+        "response": clean_msg
+    })
 
 @app.route('/api/logs', methods=['GET'])
 def get_logs():
