@@ -16,8 +16,8 @@ CORS(app)
 
 fake = Faker()
 domain = "https://www.epicalarc.com"
-# Default proxy from stau.py
-DEFAULT_PROXY = "http://tickets:proxyon145@23.108.233.92:12345"
+# Default proxy updated
+DEFAULT_PROXY = "http://nuhqfbby:517pqucq7vwv@142.111.48.253:7030"
 
 live_logs = []
 
