@@ -18,16 +18,16 @@ fake = Faker()
 domain = "https://www.epicalarc.com"
 # Proxy List
 PROXIES = [
-    "http://mytkdpjb:ttc6d7nnoao5@142.111.48.253:7030",
-    "http://mytkdpjb:ttc6d7nnoao5@23.95.150.145:6114",
-    "http://mytkdpjb:ttc6d7nnoao5@198.23.239.134:6540",
-    "http://mytkdpjb:ttc6d7nnoao5@107.172.163.27:6543",
-    "http://mytkdpjb:ttc6d7nnoao5@198.105.121.200:6462",
-    "http://mytkdpjb:ttc6d7nnoao5@64.137.96.74:6641",
-    "http://mytkdpjb:ttc6d7nnoao5@84.247.60.125:6095",
-    "http://mytkdpjb:ttc6d7nnoao5@216.10.27.159:6837",
-    "http://mytkdpjb:ttc6d7nnoao5@23.26.71.145:5628",
-    "http://mytkdpjb:ttc6d7nnoao5@23.27.208.120:5830"
+    "http://devtronex:devtronexop@31.59.20.176:6754",
+    "http://devtronex:devtronexop@23.95.150.145:6114",
+    "http://devtronex:devtronexop@198.23.239.134:6540",
+    "http://devtronex:devtronexop@45.38.107.97:6014",
+    "http://devtronex:devtronexop@107.172.163.27:6543",
+    "http://devtronex:devtronexop@198.105.121.200:6462",
+    "http://devtronex:devtronexop@64.137.96.74:6641",
+    "http://devtronex:devtronexop@216.10.27.159:6837",
+    "http://devtronex:devtronexop@23.26.71.145:5628",
+    "http://devtronex:devtronexop@23.229.19.94:8689"
 ]
 
 live_logs = []
